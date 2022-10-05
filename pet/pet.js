@@ -36,7 +36,12 @@ window.addEventListener('load', async () => {
     error = response.error;
     pet = response.data;
     //  - if error, display it
+
     if (error) {
+        displayError();
+    }
+
+    if (!pet) {
         location.replace('/');
     } else {
         displayPet();
