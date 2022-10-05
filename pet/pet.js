@@ -25,9 +25,20 @@ window.addEventListener('load', async () => {
     const searchParams = new URLSearchParams(location.search);
     const id = searchParams.get('id');
     //   - if no id, redirect to list (home) page
-
+    if (!id) {
+        location.replace('/');
+        return;
+    }
     //  - otherwise, get the pet by id and store the error and pet data
+    const response = await getPet(id);
+    error = response.error;
+    pet = response.data;
     //  - if error, display it
+    if (error) {
+        location.replace('/');
+    } else {
+        displayPet();
+    }
     //  - of no pet, redirect to list (home) page
     //  - otherwise, display pet
     // > Part C: also call display comments in addition to display pet
@@ -58,6 +69,10 @@ function displayError() {
 
 function displayPet() {
     // > Part B: display the pet info
+    petName.textContent = pet.name;
+    petBio.textContent = pet.bio;
+    petImage.src = pet.image_url;
+    petImage.alt = `${pet.name} image`;
 }
 
 function displayComments() {
